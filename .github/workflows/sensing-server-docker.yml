@@ -71,7 +71,11 @@ jobs:
           DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
           DH_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          printf '%s' "$DH_TOKEN" | docker login docker.io -u "$DH_USER" --password-stdin
+          if [ -n "$DH_USER" ] && [ -n "$DH_TOKEN" ]; then
+            printf '%s' "$DH_TOKEN" | docker login docker.io -u "$DH_USER" --password-stdin
+          else
+            echo "WARNING: Docker Hub credentials not configured; Docker Hub push will be skipped or fail gracefully"
+          fi
 
       - name: Log in to ghcr.io
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
