@@ -26,10 +26,6 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: clone-tracking
-  cancel-in-progress: false
-
 jobs:
   snapshot:
     runs-on: ubuntu-latest
@@ -147,5 +143,5 @@ jobs:
             exit 0
           fi
           git add data/clone-data.rvf
-          git commit -m "chore(traffic): clone snapshot — ${{ steps.agg.outputs.clone_days }} days observed → ${{ steps.agg.outputs.clones }} clones, ${{ steps.agg.outputs.view_days }} view-days → ${{ steps.agg.outputs.views }} views"
+          git commit -m "chore(traffic): clone snapshot — ${{ steps.agg.outputs.clone_days }} days observed → ${{ steps.agg.outputs.clones }} clones, ${{ steps.agg.outputs.view_days }} view-days observed → ${{ steps.agg.outputs.views }} views"
           git push
